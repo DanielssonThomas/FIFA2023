@@ -1,11 +1,11 @@
 # FIFA2023
  
-1.
-/*list all games today*/
+1. 
+/* list all games today */
 select * from games where game_date like “8/20/2023"
 
 2. 
-/*list a teams matches and results */
+/* list a teams matches and results */
 SELECT games.id as game_id, game_date, minutes_played, penalty_shootout,
 (select count(*) from events where games.id = events.game_id and events.event_id = 5) as shots,
 (select count(*) from events where games.id = events.game_id and events.team_id = 8 and events.event_id = 1) as score,
@@ -29,24 +29,24 @@ WHERE home_team_id = 8 or away_team_id = 8
 GROUP by game_id
 
 3. 
-/*list a group table*/
+/* list a group table */
 select *, (scored_goals - conceeded_goals) as goal_differece from teams where group_id = 1
 
 4. 
-/*llist top 10 players sorted by goals */
+/* llist top 10 players sorted by goals */
 Select id, goals, first_name, last_name
 from players
 Order by goals desc
 Limit 10
 
-/*list top 10 players sorted by assist */
+/* list top 10 players sorted by assist */
 Select id, assists, first_name, last_name
 from players
 Order by assists desc
 Limit 10
 
 5.
-/*list unavailable players */
+/* list unavailable players */
 select players.id as player_id, players.first_name, players.last_name,
 (select count(id) from events where events.event_id = 4 and events.player_id = players.id) as red_cards,
 (select count(*) from events where events.event_id = 3 and events.player_id = players.id) as yellow_cards
@@ -57,7 +57,7 @@ where red_cards >= 1 or yellow_cards >= 2
 GROUP by player_id
 
 6.
-/*list a teams roster */
+/* list a teams roster */
 select players.team_id, coach_id, players.id as player_id, first_name, last_name,
 (select count(*) from events where players.id = events.player_id and events.event_id = 5) as shots,
 (select count(*) from events where players.id = events.player_id and events.event_id = 1) as score,
@@ -79,7 +79,7 @@ where players.team_id = 32
 GROUP by players.id
 
 7.
-/*Detailed info for a finished game */
+/* Detailed info for a finished game */
 select games.id as game_id, game_date, games.minutes_played as game_length, penalty_shootout, referee_id, venue_id, games_players.player_id, players.first_name, players.last_name, started, games_players.minutes_played, players.team_id, teams.team_name,
 (event_type_id.id = 1) as score,
 (event_type_id.id = 2) as assist,
@@ -104,7 +104,7 @@ on teams.id = players.team_id
 where games.id = 3
 
 8. 
-/*short info about specific game */
+/* short info about specific game */
 select
 home_team.team_name as home_team,
 home_team_flag.team_abbreviation as home_team_abbreviation,
@@ -130,7 +130,7 @@ where games.id = 3
 9. 
 
 
-/*list playoff tree */
+/* list playoff tree */
 select
 games.id AS "game", 
 games.game_date, 
